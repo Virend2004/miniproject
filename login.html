@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup - GL BAJAJ Database Portal</title>
+
+    <!-- Boxicons Icons CDN -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <!-- Top Navigation Controls -->
+    <div class="top-nav-controls">
+        <a href="index.html" class="back-home"><i class="bx bx-left-arrow-alt"></i> Back to Portal</a>
+        <button type="button" id="bgToggleBtn" class="theme-toggle-btn" onclick="toggleCampusBg()" title="Switch Background Image">
+            <i class="bx bx-image-alt"></i> Campus Background
+        </button>
+    </div>
+
+    <div class="container" id="loginContainer">
+
+        <!-- ==================== LOGIN FORM ==================== -->
+        <div class="form-box login">
+            <form id="loginForm" autocomplete="off">
+                <!-- User Profile Image / Avatar Section on Login -->
+                <div class="avatar-header-section">
+                    <div class="avatar-circle-wrapper" title="Click to upload/change photo">
+                        <img id="loginAvatarPreview" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%20width%3D%22100%22%20height%3D%22100%22%3E%0A%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%230771db%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%224%22/%3E%0A%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20font-size%3D%2242%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%F0%9F%8E%93%3C/text%3E%0A%3C/svg%3E" alt="User Profile Image">
+                        <label for="loginImageFileInput" class="avatar-edit-icon" title="Upload custom photo">
+                            <i class="bx bxs-camera"></i>
+                        </label>
+                        <input type="file" id="loginImageFileInput" accept="image/*" style="display:none;" onchange="handleLoginImageUpload(event)">
+                    </div>
+                    <div class="avatar-meta">
+                        <span id="loginAvatarName" class="avatar-user-name">Welcome Back</span>
+                        <span id="loginAvatarRoleBadge" class="avatar-role-pill">Student Portal</span>
+                    </div>
+                    <div class="image-action-pills">
+                        <button type="button" class="img-pill-btn" onclick="openImageModal('login')">
+                            <i class="bx bx-image"></i> Image Options
+                        </button>
+                    </div>
+                </div>
+
+                <h1>Login</h1>
+
+                <!-- Status Alert Box -->
+                <div id="loginAlert" class="alert-banner"></div>
+
+                <!-- Role Selection -->
+                <div class="input-box">
+                    <select id="loginRole" onchange="onLoginRoleChange()" required>
+                        <option value="student" selected>Role: Student</option>
+                        <option value="faculty">Role: Faculty / Teacher</option>
+                        <option value="staff">Role: Staff / Administration</option>
+                        <option value="other">Role: Other / Visitor</option>
+                    </select>
+                    <i class="bx bxs-user-badge"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="loginUsername" placeholder="Username or Email" required oninput="onUsernameInput()">
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <i class="bx bxs-lock-alt"></i>
+                </div>
+
+                <div class="forgot-link">
+                    <a href="javascript:void(0)" onclick="alert('Password reset link will be sent to your registered college email.')">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn" id="loginSubmitBtn">Login</button>
+
+                <!-- Quick One-Click Demo Logins -->
+                <div class="demo-accounts">
+                    <span class="demo-title">Quick Test Accounts:</span>
+                    <button type="button" class="demo-pill" onclick="fillDemo('student')">🎓 Student</button>
+                    <button type="button" class="demo-pill" onclick="fillDemo('faculty')">👨‍🏫 Faculty</button>
+                    <button type="button" class="demo-pill" onclick="fillDemo('admin')">🛡️ Admin</button>
+                </div>
+
+                <div class="social-icons">
+                    <a href="javascript:void(0)" onclick="alert('Google SSO authentication coming soon!')" title="Google"><i class="bx bxl-google"></i></a>
+                    <a href="javascript:void(0)" onclick="alert('Microsoft 365 authentication coming soon!')" title="Microsoft"><i class="bx bxl-microsoft"></i></a>
+                    <a href="javascript:void(0)" onclick="alert('GitHub authentication coming soon!')" title="GitHub"><i class="bx bxl-github"></i></a>
+                </div>
+            </form>
+        </div>
+
+        <!-- ==================== REGISTRATION FORM ==================== -->
+        <div class="form-box register">
+            <form id="registerForm" autocomplete="off">
+                <!-- User Profile Photo / Image Upload Section on Registration -->
+                <div class="avatar-header-section reg-avatar-section">
+                    <div class="avatar-circle-wrapper" title="Upload Student/Faculty Photo">
+                        <img id="regAvatarPreview" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%20width%3D%22100%22%20height%3D%22100%22%3E%0A%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%230771db%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%224%22/%3E%0A%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20font-size%3D%2242%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%F0%9F%8E%93%3C/text%3E%0A%3C/svg%3E" alt="Profile Photo Preview">
+                        <label for="regImageFileInput" class="avatar-edit-icon" title="Upload Photo">
+                            <i class="bx bxs-camera-plus"></i>
+                        </label>
+                        <input type="file" id="regImageFileInput" accept="image/*" style="display:none;" onchange="handleRegImageUpload(event)">
+                    </div>
+                    <div class="avatar-meta">
+                        <span class="avatar-user-name">Profile & ID Image</span>
+                        <span id="regImageStatusBadge" class="avatar-role-pill">Default Avatar Selected</span>
+                    </div>
+                    <div class="image-action-pills">
+                        <button type="button" class="img-pill-btn" onclick="document.getElementById('regImageFileInput').click()">
+                            <i class="bx bx-upload"></i> Upload Image
+                        </button>
+                        <button type="button" class="img-pill-btn" onclick="openImageModal('reg')">
+                            <i class="bx bx-image"></i> Pick Avatar
+                        </button>
+                    </div>
+                </div>
+
+                <h1>Registration</h1>
+
+                <!-- Status Alert Box -->
+                <div id="registerAlert" class="alert-banner"></div>
+
+                <!-- Role Selection -->
+                <div class="input-box">
+                    <select id="regRole" onchange="onRoleChange()" required>
+                        <option value="" disabled selected>Select Your Role</option>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty / Teacher</option>
+                        <option value="staff">Staff / Administration</option>
+                        <option value="other">Other / Visitor</option>
+                    </select>
+                    <i class="bx bxs-graduation"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="regFullname" placeholder="Full Name" required>
+                    <i class="bx bxs-id-card"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="regIdNumber" placeholder="Roll No / Student ID" required>
+                    <i class="bx bxs-badge-check"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="regUsername" placeholder="Choose Username" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="email" id="regEmail" placeholder="Official / Personal Email" required>
+                    <i class="bx bxs-envelope"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="regPassword" placeholder="Create Password" required>
+                    <i class="bx bxs-lock-alt"></i>
+                </div>
+
+                <button type="submit" class="btn" id="regSubmitBtn">Register</button>
+            </form>
+        </div>
+
+        <!-- ==================== ANIMATION TOGGLE PANEL ==================== -->
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have a GL Bajaj portal account yet?</p>
+                <button type="button" class="btn register-btn">
+                    Register
+                </button>
+            </div>
+
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account? Sign in here.</p>
+                <button type="button" class="btn login-btn">
+                    Login
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== IMAGE & AVATAR PICKER MODAL ==================== -->
+    <div id="imagePickerModal" class="img-modal-overlay">
+        <div class="img-modal-card">
+            <div class="img-modal-header">
+                <h3><i class="bx bx-image"></i> Select Profile Image</h3>
+                <button type="button" class="img-modal-close" onclick="closeImageModal()">&times;</button>
+            </div>
+            <p class="img-modal-subtitle">Upload your photo or choose an official GL Bajaj role avatar:</p>
+
+            <!-- Custom Device Upload Box -->
+            <div class="custom-upload-box" onclick="document.getElementById('modalImageFileInput').click()">
+                <i class="bx bx-cloud-upload"></i>
+                <div>
+                    <strong>Upload Photo from Device</strong>
+                    <p>Supports JPG, PNG, WEBP (Auto-formatted)</p>
+                </div>
+                <input type="file" id="modalImageFileInput" accept="image/*" style="display:none;" onchange="handleModalFileSelect(event)">
+            </div>
+
+            <div class="avatar-divider"><span>OR CHOOSE A PRESET AVATAR</span></div>
+
+            <!-- Preset Institutional Avatars -->
+            <div class="preset-avatar-grid">
+                <div class="preset-item active" onclick="selectPreset('student', this)" title="Student (Male)">
+                    <img id="presetImg_student" alt="Student 1">
+                    <span>Student 1</span>
+                </div>
+                <div class="preset-item" onclick="selectPreset('student_female', this)" title="Student (Female)">
+                    <img id="presetImg_student_female" alt="Student 2">
+                    <span>Student 2</span>
+                </div>
+                <div class="preset-item" onclick="selectPreset('faculty', this)" title="Faculty / Professor">
+                    <img id="presetImg_faculty" alt="Faculty 1">
+                    <span>Faculty 1</span>
+                </div>
+                <div class="preset-item" onclick="selectPreset('faculty_female', this)" title="Faculty (Female)">
+                    <img id="presetImg_faculty_female" alt="Faculty 2">
+                    <span>Faculty 2</span>
+                </div>
+                <div class="preset-item" onclick="selectPreset('staff', this)" title="Staff & Administration">
+                    <img id="presetImg_staff" alt="Staff">
+                    <span>Staff</span>
+                </div>
+                <div class="preset-item" onclick="selectPreset('tech', this)" title="Tech / Lab Researcher">
+                    <img id="presetImg_tech" alt="Tech">
+                    <span>Tech</span>
+                </div>
+            </div>
+
+            <div class="img-modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeImageModal()">Cancel</button>
+                <button type="button" class="btn-apply" onclick="applySelectedImage()">Apply Image</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Database Authentication Modules -->
+    <script src="database.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

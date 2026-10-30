@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard & Campus Management - GL BAJAJ</title>
+    <!-- Boxicons Icons CDN -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="his.css">
+    <style>
+        /* ==========================================================================
+           GL BAJAJ - Administrative Console Stylesheet
+           ========================================================================== */
+        .admin-page-wrapper {
+            max-width: 1240px;
+            margin: 20px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Admin Hero Banner */
+        .admin-header-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 17, 36, 0.98) 100%);
+            border: 1px solid rgba(7, 113, 219, 0.5);
+            border-radius: 14px;
+            padding: 24px 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(7, 113, 219, 0.2);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            backdrop-filter: blur(10px);
+        }
+        .admin-title-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .admin-shield-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            background: rgba(7, 113, 219, 0.2);
+            border: 1.5px solid #38bdf8;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+        .admin-title-area h1 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .admin-title-area h1 span {
+            color: #38bdf8;
+        }
+        .admin-title-area p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin: 4px 0 0 0;
+        }
+        .admin-auth-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-user-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(7, 113, 219, 0.4);
+            padding: 6px 14px;
+            border-radius: 9999px;
+        }
+        .admin-avatar-img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #38bdf8;
+            background: #ffffff;
+        }
+        .admin-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-user-name {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .admin-user-role {
+            font-size: 0.72rem;
+            color: #38bdf8;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        /* Metric Cards Grid */
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: rgb(7, 113, 219);
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(7, 113, 219, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(7, 113, 219, 0.2);
+        }
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        .stat-subtext {
+            font-size: 0.74rem;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+        .stat-icon {
+            font-size: 2.2rem;
+            color: rgba(56, 189, 248, 0.4);
+        }
+
+        /* Tab Navigation Bar */
+        .admin-nav-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid rgba(7, 113, 219, 0.3);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .admin-tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: none;
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .admin-tab-btn:hover {
+            color: #ffffff;
+            background: rgba(7, 113, 219, 0.2);
+        }
+        .admin-tab-btn.active {
+            background: rgb(7, 113, 219);
+            color: #ffffff;
+            border-color: rgb(7, 113, 219);
+            box-shadow: 0 -2px 10px rgba(7, 113, 219, 0.4);
+        }
+
+        /* Tab Panes */
+        .tab-pane {
+            display: none;
+            animation: fadeInTab 0.3s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Container Cards */
+        .admin-section-box {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(7, 113, 219, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+        }
+        .section-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .section-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-header-title h3 {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 700;
+        }
+        .section-header-title p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin: 2px 0 0 0;
+        }
+
+        /* Search & Filter Toolbar */
+        .toolbar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .search-box-wrap {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-box-wrap i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #38bdf8;
+            font-size: 1.1rem;
+        }
+        .search-box-wrap input {
+            width: 100%;
+            height: 40px;
+            background: rgba(2, 6, 23, 0.7);
+            border: 1px solid rgba(7, 113, 219, 0.4);
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 0 12px 0 38px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-box-wrap input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+        .filter-btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .filter-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
+            font-size: 0.76rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-pill:hover {
+            color: #ffffff;
+            border-color: rgba(7, 113, 219, 0.6);
+        }
+        .filter-pill.active {
+            background: rgb(7, 113, 219);
+            color: #ffffff;
+            border-color: rgb(7, 113, 219);
+        }
+
+        /* Glassmorphic Data Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+        .admin-table th {
+            background: rgba(2, 6, 23, 0.85);
+            color: #38bdf8;
+            padding: 12px 14px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(7, 113, 219, 0.4);
+            white-space: nowrap;
+        }
+        .admin-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+        .admin-table tr:hover td {
+            background: rgba(7, 113, 219, 0.08);
+        }
+        .role-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .role-badge.role-student {
+            background: rgba(7, 113, 219, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(7, 113, 219, 0.4);
+        }
+        .role-badge.role-faculty {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+        .role-badge.role-staff, .role-badge.role-admin {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-action-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-action-icon:hover {
+            color: #ffffff;
+            background: rgba(7, 113, 219, 0.3);
+            border-color: #38bdf8;
+        }
+        .btn-action-icon.btn-delete:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+            color: #f87171;
+        }
+        .btn-primary-action {
+            background: linear-gradient(135deg, rgb(7, 113, 219) 0%, rgb(2, 132, 199) 100%);
+            border: none;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-primary-action:hover {
+            background: linear-gradient(135deg, rgb(10, 125, 240) 0%, rgb(14, 165, 233) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(7, 113, 219, 0.4);
+        }
+
+        /* Facility Cards Grid */
+        .facility-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .facility-card {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(7, 113, 219, 0.3);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .facility-card h4 {
+            font-size: 1rem;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .facility-card p {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .facility-lifts-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 0.76rem;
+            color: #94a3b8;
+        }
+        .facility-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        /* Form Inputs */
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 600px) {
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+        .form-control {
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid rgba(7, 113, 219, 0.4);
+            border-radius: 8px;
+            height: 40px;
+            color: #ffffff;
+            padding: 0 12px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        textarea.form-control {
+            height: 90px;
+            padding: 10px 12px;
+            resize: vertical;
+        }
+        .form-control:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Modal Dialog */
+        .admin-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .admin-modal-card {
+            background: #0f172a;
+            border: 2px solid rgb(7, 113, 219);
+            border-radius: 12px;
+            max-width: 520px;
+            width: 100%;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .admin-modal-card h3 {
+            font-size: 1.25rem;
+            color: rgb(7, 113, 219);
+            margin: 0 0 14px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav>
+        <div class="logo">
+            <h1>GL <span>BAJAJ</span></h1>
+        </div>
+        <div class="links">
+            <div class="link"><a href="index.html">HOME</a></div>
+            <div class="link"><a href="vivek.html">NAVIGATION</a></div>
+            <div class="link"><a href="events.html">EVENTS</a></div>
+            <div class="link"><a href="login.html">LOGIN</a></div>
+            <div class="link"><a href="admin.html" style="color: #38bdf8; font-weight: bold;"><i class='bx bx-shield-quarter'></i> ADMIN</a></div>
+        </div>
+    </nav>
+
+    <div class="admin-page-wrapper">
+        <!-- Admin Hero Header -->
+        <div class="admin-header-card">
+            <div class="admin-title-area">
+                <div class="admin-shield-icon">
+                    <i class='bx bx-shield-quarter'></i>
+                </div>
+                <div>
+                    <h1>Campus <span>Administration & Control Center</span></h1>
+                    <p>Manage college directories, floor maps, CAD blueprints, user accounts, and events.</p>
+                </div>
+            </div>
+
+            <div class="admin-auth-panel">
+                <div class="admin-user-pill" id="adminUserPill">
+                    <img id="adminHeaderAvatar" class="admin-avatar-img" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%20width%3D%22100%22%20height%3D%22100%22%3E%0A%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%237c3aed%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%224%22/%3E%0A%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20font-size%3D%2242%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%0A%3C/svg%3E" alt="Admin">
+                    <div class="admin-user-info">
+                        <span class="admin-user-name" id="adminHeaderName">Admin Office</span>
+                        <span class="admin-user-role" id="adminHeaderRole">Staff / Admin</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary-action" onclick="quickLoginDemoAdmin()" title="Quick Switch to Master Admin Account">
+                    <i class='bx bx-key'></i> Quick Admin Login
+                </button>
+                <button type="button" class="btn-action-icon" onclick="logoutAdmin()" title="Logout">
+                    <i class='bx bx-log-out'></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Real-Time Metrics Row -->
+        <div class="admin-stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">Registered Accounts</span>
+                    <span class="stat-value" id="statUsersCount">--</span>
+                    <span class="stat-subtext" id="statUsersBreakdown">Loading accounts...</span>
+                </div>
+                <i class='bx bx-group stat-icon'></i>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">Campus Buildings</span>
+                    <span class="stat-value" id="statBlocksCount">6</span>
+                    <span class="stat-subtext">CTM A & B 10-Floor Towers</span>
+                </div>
+                <i class='bx bx-buildings stat-icon'></i>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">CAD Blueprints</span>
+                    <span class="stat-value" id="statMapsCount">4 Floors</span>
+                    <span class="stat-subtext">Floors 6, 8, 9, 10 Active</span>
+                </div>
+                <i class='bx bx-map-alt stat-icon'></i>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">Campus Events</span>
+                    <span class="stat-value" id="statEventsCount">--</span>
+                    <span class="stat-subtext">Hackathons & Fests</span>
+                </div>
+                <i class='bx bx-calendar-event stat-icon'></i>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">Helpdesk Inquiries</span>
+                    <span class="stat-value" id="statMessagesCount">--</span>
+                    <span class="stat-subtext">Student Inquiries</span>
+                </div>
+                <i class='bx bx-envelope stat-icon'></i>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-nav-tabs">
+            <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('usersTab', this)">
+                <i class='bx bx-user-check'></i> User Accounts & Roles
+            </button>
+            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('facilitiesTab', this)">
+                <i class='bx bx-building'></i> Campus Facilities & CAD Maps
+            </button>
+            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('eventsTab', this)">
+                <i class='bx bx-calendar-plus'></i> Events & Notice Manager
+            </button>
+            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('inquiriesTab', this)">
+                <i class='bx bx-chat'></i> Helpdesk Inquiries
+            </button>
+            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('systemTab', this)">
+                <i class='bx bx-cog'></i> System Diagnostics & GPS
+            </button>
+        </div>
+
+        <!-- TAB 1: USER MANAGEMENT -->
+        <div id="usersTab" class="tab-pane active">
+            <div class="admin-section-box">
+                <div class="section-header-row">
+                    <div class="section-header-title">
+                        <i class='bx bx-user-pin' style="font-size: 1.5rem; color: #38bdf8;"></i>
+                        <div>
+                            <h3>Institutional User Directory</h3>
+                            <p>Browse, search, edit, and manage student, faculty, and administrator accounts.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary-action" onclick="openAddUserModal()">
+                        <i class='bx bx-user-plus'></i> Add New Account
+                    </button>
+                </div>
+
+                <div class="toolbar-row">
+                    <div class="search-box-wrap">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="userSearchInput" placeholder="Search by name, roll no, email, or dept..." oninput="filterUsersList()">
+                    </div>
+                    <div class="filter-btn-group">
+                        <button type="button" class="filter-pill active" onclick="setRoleFilter('all', this)">All</button>
+                        <button type="button" class="filter-pill" onclick="setRoleFilter('student', this)">Students</button>
+                        <button type="button" class="filter-pill" onclick="setRoleFilter('faculty', this)">Faculty</button>
+                        <button type="button" class="filter-pill" onclick="setRoleFilter('staff', this)">Staff / Admin</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Full Name</th>
+                                <th>Username / Email</th>
+                                <th>Role</th>
+                                <th>ID / Roll Number</th>
+                                <th>Department</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align:center; padding: 20px; color:#94a3b8;">Loading user directory...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: CAMPUS FACILITIES & CAD BLUEPRINTS -->
+        <div id="facilitiesTab" class="tab-pane">
+            <div class="admin-section-box">
+                <div class="section-header-row">
+                    <div class="section-header-title">
+                        <i class='bx bx-map-pin' style="font-size: 1.5rem; color: #38bdf8;"></i>
+                        <div>
+                            <h3>Campus Blocks & Interactive Blueprints</h3>
+                            <p>Verify building coordinates, elevator permissions, and interactive floor plans.</p>
+                        </div>
+                    </div>
+                    <a href="vivek.html" class="btn-primary-action">
+                        <i class='bx bx-navigation'></i> Open Live Map
+                    </a>
+                </div>
+
+                <!-- 4 Interactive CAD Blueprint Quick Links -->
+                <h4 style="color: #38bdf8; font-size: 0.95rem; margin-bottom: 12px; font-weight: 700;">
+                    📐 Active High-Resolution CAD Floor Blueprints (CTM Block A):
+                </h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px;">
+                    <div style="background: rgba(16, 185, 129, 0.12); border: 1.5px solid #10b981; border-radius: 8px; padding: 12px;">
+                        <span style="background: #10b981; color:#fff; font-weight:800; font-size:0.75rem; padding:2px 8px; border-radius:4px;">FLOOR 10</span>
+                        <h5 style="margin: 6px 0 2px 0; color:#fff; font-size:0.92rem;">Computing Labs 1001-1008</h5>
+                        <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom: 8px;">AI, GPU, Cybersecurity, Server Room & Lifts A/B</p>
+                        <a href="vivek.html#floor10" class="btn-primary-action" style="font-size: 0.75rem; padding: 5px 10px;">
+                            View 10th Flr Blueprint →
+                        </a>
+                    </div>
+                    <div style="background: rgba(14, 165, 233, 0.12); border: 1.5px solid #0ea5e9; border-radius: 8px; padding: 12px;">
+                        <span style="background: #0ea5e9; color:#fff; font-weight:800; font-size:0.75rem; padding:2px 8px; border-radius:4px;">FLOOR 9</span>
+                        <h5 style="margin: 6px 0 2px 0; color:#fff; font-size:0.92rem;">Academic Lecture Halls 901-907</h5>
+                        <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom: 8px;">Rooms 901-907, Senior Dean Gate 1 & Lifts A/B</p>
+                        <a href="vivek.html#floor9" class="btn-primary-action" style="font-size: 0.75rem; padding: 5px 10px;">
+                            View 9th Flr Blueprint →
+                        </a>
+                    </div>
+                    <div style="background: rgba(168, 85, 247, 0.12); border: 1.5px solid #a855f7; border-radius: 8px; padding: 12px;">
+                        <span style="background: #a855f7; color:#fff; font-weight:800; font-size:0.75rem; padding:2px 8px; border-radius:4px;">FLOOR 8</span>
+                        <h5 style="margin: 6px 0 2px 0; color:#fff; font-size:0.92rem;">Academic Lecture Halls 801-807</h5>
+                        <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom: 8px;">Rooms 801-807, Faculty Cabin Gate 1 & Lifts A/B</p>
+                        <a href="vivek.html#floor8" class="btn-primary-action" style="font-size: 0.75rem; padding: 5px 10px;">
+                            View 8th Flr Blueprint →
+                        </a>
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.12); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 12px;">
+                        <span style="background: #f59e0b; color:#fff; font-weight:800; font-size:0.75rem; padding:2px 8px; border-radius:4px;">FLOOR 6</span>
+                        <h5 style="margin: 6px 0 2px 0; color:#fff; font-size:0.92rem;">Examination Cell & Controller</h5>
+                        <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom: 8px;">Rooms 601-608, Exam Cell & Lifts A/C</p>
+                        <a href="vivek.html#floor6" class="btn-primary-action" style="font-size: 0.75rem; padding: 5px 10px;">
+                            View 6th Flr Blueprint →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Campus Blocks Directory -->
+                <h4 style="color: #38bdf8; font-size: 0.95rem; margin-bottom: 12px; font-weight: 700;">
+                    🏢 Campus Blocks Master Directory:
+                </h4>
+                <div class="facility-cards-grid" id="campusBlocksGrid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: EVENTS & NOTICES MANAGER -->
+        <div id="eventsTab" class="tab-pane">
+            <div class="admin-section-box">
+                <div class="section-header-row">
+                    <div class="section-header-title">
+                        <i class='bx bx-calendar-event' style="font-size: 1.5rem; color: #38bdf8;"></i>
+                        <div>
+                            <h3>Campus Events & Notice Board System</h3>
+                            <p>Publish new hackathons, conferences, and student activities directly to the portal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Event Form -->
+                <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(7, 113, 219, 0.35); border-radius: 10px; padding: 18px; margin-bottom: 24px;">
+                    <h4 style="color: #38bdf8; font-size: 0.95rem; margin: 0 0 14px 0; font-weight: 700;">
+                        ➕ Publish New Event / Notice:
+                    </h4>
+                    <form id="createEventForm" onsubmit="handleCreateEvent(event)">
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="eventTitle">Event Title *</label>
+                                <input type="text" id="eventTitle" class="form-control" placeholder="e.g. Smart India Hackathon internal round..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDate">Event Date *</label>
+                                <input type="text" id="eventDate" class="form-control" placeholder="e.g. November 20, 2026" required>
+                            </div>
+                        </div>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="eventCategory">Category</label>
+                                <select id="eventCategory" class="form-control">
+                                    <option value="Technical">Technical / Coding</option>
+                                    <option value="Cultural">Cultural Fest</option>
+                                    <option value="Academic">Academic Seminar</option>
+                                    <option value="Placement">T&P Placement Drive</option>
+                                    <option value="Sports">Sports Meet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventLocation">Campus Location</label>
+                                <input type="text" id="eventLocation" class="form-control" placeholder="e.g. CTM Block A, Floor 10 AI Lab" value="GL Bajaj Campus">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDesc">Event Description</label>
+                            <textarea id="eventDesc" class="form-control" placeholder="Provide detailed instructions, rules, and eligibility..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-action">
+                            <i class='bx bx-check-circle'></i> Publish Event to College Portal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Events List -->
+                <h4 style="color: #ffffff; font-size: 1rem; margin-bottom: 12px; font-weight: 700;">
+                    Published Events Directory:
+                </h4>
+                <div id="eventsListContainer" style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: HELPDESK & CONTACT INQUIRIES -->
+        <div id="inquiriesTab" class="tab-pane">
+            <div class="admin-section-box">
+                <div class="section-header-row">
+                    <div class="section-header-title">
+                        <i class='bx bx-chat' style="font-size: 1.5rem; color: #38bdf8;"></i>
+                        <div>
+                            <h3>Student & Visitor Helpdesk Inquiries</h3>
+                            <p>Review contact messages and inquiries submitted through the contact page.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="inquiriesListContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: SYSTEM DIAGNOSTICS & GPS -->
+        <div id="systemTab" class="tab-pane">
+            <div class="admin-section-box">
+                <div class="section-header-row">
+                    <div class="section-header-title">
+                        <i class='bx bx-server' style="font-size: 1.5rem; color: #38bdf8;"></i>
+                        <div>
+                            <h3>System Diagnostics & Calibration</h3>
+                            <p>Inspect backend status, SQLite database, and campus GPS anchors.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary-action" onclick="refreshAdminDashboard()">
+                        <i class='bx bx-refresh'></i> Refresh All Metrics
+                    </button>
+                </div>
+
+                <div class="form-grid-2">
+                    <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(7, 113, 219, 0.35); border-radius: 8px; padding: 16px;">
+                        <h4 style="color:#38bdf8; font-size:0.95rem; margin-bottom:10px;"><i class='bx bx-data'></i> Database & Backend:</h4>
+                        <p style="font-size:0.82rem; color:#cbd5e1; line-height:1.6;">
+                            • <strong>Engine:</strong> Python SQLite3 REST Server<br>
+                            • <strong>Database File:</strong> <code style="color:#38bdf8;">database.db</code><br>
+                            • <strong>Tables:</strong> users, sessions, campus_blocks, floor_plans, events, contact_messages<br>
+                            • <strong>Offline Support:</strong> Dual-Mode Sync via LocalStorage
+                        </p>
+                    </div>
+                    <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(7, 113, 219, 0.35); border-radius: 8px; padding: 16px;">
+                        <h4 style="color:#38bdf8; font-size:0.95rem; margin-bottom:10px;"><i class='bx bx-current-location'></i> GPS Coordinates Calibration:</h4>
+                        <p style="font-size:0.82rem; color:#cbd5e1; line-height:1.6;">
+                            • <strong>Campus Center:</strong> 28.4727° N, 77.4891° E<br>
+                            • <strong>Main Campus Gate:</strong> 28.4720° N, 77.4890° E<br>
+                            • <strong>CTM Block A (10 Flr):</strong> 28.4732° N, 77.4893° E<br>
+                            • <strong>CTM Block B (10 Flr):</strong> 28.4730° N, 77.4898° E<br>
+                            • <strong>Central Library:</strong> 28.4728° N, 77.4888° E
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD USER MODAL DIALOG -->
+    <div id="addUserModal" class="admin-modal-overlay">
+        <div class="admin-modal-card">
+            <h3>
+                <span>➕ Add New User Account</span>
+                <button type="button" onclick="closeAddUserModal()" style="background:none; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;">&times;</button>
+            </h3>
+            <form id="addUserForm" onsubmit="handleCreateUser(event)">
+                <div class="form-group">
+                    <label for="newFullName">Full Name *</label>
+                    <input type="text" id="newFullName" class="form-control" placeholder="e.g. Vikramaditya Rathore" required>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="newUsername">Username *</label>
+                        <input type="text" id="newUsername" class="form-control" placeholder="e.g. vikram_cs" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newEmail">Email Address *</label>
+                        <input type="email" id="newEmail" class="form-control" placeholder="e.g. vikram@glbitm.org" required>
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="newRole">Role *</label>
+                        <select id="newRole" class="form-control" required>
+                            <option value="student">Student</option>
+                            <option value="faculty">Faculty / Professor</option>
+                            <option value="staff">Staff / Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password *</label>
+                        <input type="password" id="newPassword" class="form-control" placeholder="Minimum 4 characters" required minlength="4">
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="newIdNumber">Roll No / Faculty ID</label>
+                        <input type="text" id="newIdNumber" class="form-control" placeholder="e.g. 230192010150">
+                    </div>
+                    <div class="form-group">
+                        <label for="newDepartment">Department</label>
+                        <input type="text" id="newDepartment" class="form-control" placeholder="e.g. Computer Science & Eng.">
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+                    <button type="button" class="btn-action-icon" style="width:auto; padding:0 14px; height:38px;" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary-action" style="height:38px;">Save Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="database.js"></script>
+    <script>
+        let allUsersCache = [];
+        let currentRoleFilter = "all";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initAdminAuth();
+            refreshAdminDashboard();
+        });
+
+        // Initialize Admin Auth state
+        function initAdminAuth() {
+            if (typeof CollegeDB === "undefined") return;
+            const session = CollegeDB.getCurrentSession();
+            const nameEl = document.getElementById("adminHeaderName");
+            const roleEl = document.getElementById("adminHeaderRole");
+            const avatarEl = document.getElementById("adminHeaderAvatar");
+
+            if (session && session.username) {
+                if (nameEl) nameEl.textContent = session.fullname || session.username;
+                if (roleEl) roleEl.textContent = (session.role || "Admin").toUpperCase();
+                if (avatarEl && session.avatar) avatarEl.src = session.avatar;
+            } else {
+                // Default to Admin view
+                if (nameEl) nameEl.textContent = "Admin Console";
+                if (roleEl) roleEl.textContent = "SUPER ADMIN";
+            }
+        }
+
+        // Quick switch to demo Admin account
+        async function quickLoginDemoAdmin() {
+            try {
+                const res = await CollegeDB.login("admin", "admin123", "staff");
+                alert("Logged in as Admin Office successfully!");
+                initAdminAuth();
+                refreshAdminDashboard();
+            } catch (e) {
+                alert("Login: " + e.message);
+            }
+        }
+
+        function logoutAdmin() {
+            if (typeof CollegeDB !== "undefined") {
+                CollegeDB.logout();
+            }
+            alert("Logged out from admin session.");
+            window.location.href = "login.html";
+        }
+
+        // Tab Switching
+        function switchAdminTab(tabId, btn) {
+            document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
+
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add("active");
+            if (btn) btn.classList.add("active");
+        }
+
+        // Refresh all dashboard metrics & tables
+        async function refreshAdminDashboard() {
+            await loadAdminStats();
+            await loadUsersTable();
+            await loadCampusBlocks();
+            await loadEventsList();
+            await loadInquiriesList();
+        }
+
+        // Load Stats
+        async function loadAdminStats() {
+            try {
+                const data = await CollegeDB.adminGetStats();
+                if (data && data.stats) {
+                    const st = data.stats;
+                    document.getElementById("statUsersCount").textContent = st.total_users || 0;
+                    const byRole = st.users_by_role || {};
+                    document.getElementById("statUsersBreakdown").textContent = 
+                        `${byRole.student || 0} Students • ${byRole.faculty || 0} Faculty • ${byRole.staff || byRole.admin || 0} Admin`;
+                    document.getElementById("statBlocksCount").textContent = st.total_blocks || 6;
+                    document.getElementById("statEventsCount").textContent = st.total_events || 0;
+                    document.getElementById("statMessagesCount").textContent = st.total_messages || 0;
+                }
+            } catch (e) {
+                console.error("Failed to load stats:", e);
+            }
+        }
+
+        // Load Users
+        async function loadUsersTable() {
+            try {
+                const users = await CollegeDB.adminGetUsers();
+                allUsersCache = users;
+                renderUsersTable(users);
+            } catch (e) {
+                console.error("Failed to load users:", e);
+            }
+        }
+
+        function setRoleFilter(role, btn) {
+            currentRoleFilter = role;
+            document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            filterUsersList();
+        }
+
+        function filterUsersList() {
+            const query = (document.getElementById("userSearchInput").value || "").trim().toLowerCase();
+            let filtered = allUsersCache;
+
+            if (currentRoleFilter !== "all") {
+                filtered = filtered.filter(u => u.role === currentRoleFilter);
+            }
+            if (query) {
+                filtered = filtered.filter(u => 
+                    (u.fullname && u.fullname.toLowerCase().includes(query)) ||
+                    (u.username && u.username.toLowerCase().includes(query)) ||
+                    (u.email && u.email.toLowerCase().includes(query)) ||
+                    (u.idNumber && u.idNumber.toLowerCase().includes(query)) ||
+                    (u.id_number && u.id_number.toLowerCase().includes(query)) ||
+                    (u.department && u.department.toLowerCase().includes(query))
+                );
+            }
+
+            renderUsersTable(filtered);
+        }
+
+        function renderUsersTable(users) {
+            const tbody = document.getElementById("usersTableBody");
+            if (!tbody) return;
+
+            if (!users || users.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:20px; color:#94a3b8;">No matching user accounts found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = users.map(u => {
+                const roleClass = `role-${u.role || 'student'}`;
+                const avatar = u.avatar || CollegeDB.DEFAULT_AVATARS[u.role] || CollegeDB.DEFAULT_AVATARS.student;
+                const idNum = u.idNumber || u.id_number || "—";
+                const dept = u.department || "General";
+
+                return `
+                    <tr>
+                        <td>
+                            <img src="${avatar}" alt="${u.username}" style="width:32px; height:32px; border-radius:50%; object-fit:cover; border:1px solid #38bdf8; background:#fff;">
+                        </td>
+                        <td><strong>${u.fullname || u.username}</strong></td>
+                        <td>
+                            <div style="font-weight:600; color:#38bdf8;">${u.username}</div>
+                            <div style="font-size:0.75rem; color:#94a3b8;">${u.email}</div>
+                        </td>
+                        <td>
+                            <span class="role-badge ${roleClass}">${u.role || 'student'}</span>
+                        </td>
+                        <td><code>${idNum}</code></td>
+                        <td>${dept}</td>
+                        <td>
+                            <div style="display:flex; gap:6px;">
+                                <button type="button" class="btn-action-icon" title="Login as ${u.username}" onclick="switchUserSession('${u.username}')">
+                                    <i class='bx bx-log-in-circle'></i>
+                                </button>
+                                <button type="button" class="btn-action-icon btn-delete" title="Delete account" onclick="deleteUserAccount(${u.id}, '${u.username}')">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        // Switch to selected user session
+        async function switchUserSession(username) {
+            const user = allUsersCache.find(u => u.username === username);
+            if (!user) return;
+            CollegeDB.setCurrentSession(user);
+            alert(`Switched active session to ${user.fullname} (${user.role.toUpperCase()})!`);
+            window.location.href = "vivek.html";
+        }
+
+        // Delete user
+        async function deleteUserAccount(userId, username) {
+            if (!confirm(`Are you sure you want to delete user account "${username}"?`)) return;
+            const res = await CollegeDB.adminDeleteUser(userId);
+            alert(res.message || "User deleted.");
+            refreshAdminDashboard();
+        }
+
+        // Add User Modal
+        function openAddUserModal() {
+            document.getElementById("addUserModal").style.display = "flex";
+        }
+        function closeAddUserModal() {
+            document.getElementById("addUserModal").style.display = "none";
+        }
+
+        async function handleCreateUser(e) {
+            e.preventDefault();
+            const fullname = document.getElementById("newFullName").value.trim();
+            const username = document.getElementById("newUsername").value.trim().toLowerCase();
+            const email = document.getElementById("newEmail").value.trim().toLowerCase();
+            const role = document.getElementById("newRole").value;
+            const password = document.getElementById("newPassword").value;
+            const idNumber = document.getElementById("newIdNumber").value.trim();
+            const department = document.getElementById("newDepartment").value.trim();
+
+            try {
+                const res = await CollegeDB.register({
+                    fullname, username, email, role, password, idNumber, department
+                });
+                alert("Account created successfully!");
+                closeAddUserModal();
+                document.getElementById("addUserForm").reset();
+                refreshAdminDashboard();
+            } catch (err) {
+                alert("Error creating user: " + err.message);
+            }
+        }
+
+        // Load Campus Blocks
+        async function loadCampusBlocks() {
+            const grid = document.getElementById("campusBlocksGrid");
+            if (!grid) return;
+            const blocks = await CollegeDB.getCampusBlocks();
+
+            grid.innerHTML = blocks.map(b => {
+                return `
+                    <div class="facility-card">
+                        <h4>
+                            <span>${b.name}</span>
+                            <span style="font-size:0.75rem; background:rgba(7,113,219,0.2); color:#38bdf8; padding:2px 8px; border-radius:4px;">${b.floors_count} FLOORS</span>
+                        </h4>
+                        <p>${b.description}</p>
+                        <div class="facility-lifts-box">
+                            <strong>🛗 Vertical Transit / Elevators:</strong><br>
+                            ${b.elevator_info || 'Stairs & Accessibility Ramps'}
+                        </div>
+                        <div class="facility-actions">
+                            <a href="vivek.html" class="btn-primary-action" style="font-size:0.75rem; padding:5px 10px;">
+                                View on Map →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        // Events
+        async function loadEventsList() {
+            const container = document.getElementById("eventsListContainer");
+            if (!container) return;
+            const events = await CollegeDB.adminGetEvents();
+
+            if (!events || events.length === 0) {
+                container.innerHTML = `<p style="color:#94a3b8; font-size:0.85rem;">No scheduled events at this time.</p>`;
+                return;
+            }
+
+            container.innerHTML = events.map(ev => {
+                return `
+                    <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(7, 113, 219, 0.3); border-radius: 8px; padding: 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                                <span style="font-size:0.75rem; background:#0771db; color:#fff; font-weight:700; padding:2px 8px; border-radius:4px;">${ev.date_str || ev.date || 'TBA'}</span>
+                                <span style="font-size:0.75rem; background:rgba(255,255,255,0.06); color:#38bdf8; padding:2px 8px; border-radius:4px;">${ev.category || 'General'}</span>
+                            </div>
+                            <h4 style="margin:0 0 2px 0; color:#fff; font-size:0.95rem;">${ev.title}</h4>
+                            <p style="margin:0; font-size:0.78rem; color:#94a3b8;">📍 ${ev.location || 'Campus'} &bull; ${ev.description || ''}</p>
+                        </div>
+                        <button type="button" class="btn-action-icon btn-delete" title="Delete event" onclick="deleteCampusEvent(${ev.id})">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function handleCreateEvent(e) {
+            e.preventDefault();
+            const title = document.getElementById("eventTitle").value.trim();
+            const date = document.getElementById("eventDate").value.trim();
+            const category = document.getElementById("eventCategory").value;
+            const location = document.getElementById("eventLocation").value.trim();
+            const description = document.getElementById("eventDesc").value.trim();
+
+            const res = await CollegeDB.adminCreateEvent({ title, date, category, location, description });
+            alert(res.message || "Event published!");
+            document.getElementById("createEventForm").reset();
+            refreshAdminDashboard();
+        }
+
+        async function deleteCampusEvent(eventId) {
+            if (!confirm("Are you sure you want to remove this event?")) return;
+            const res = await CollegeDB.adminDeleteEvent(eventId);
+            alert(res.message || "Event deleted.");
+            refreshAdminDashboard();
+        }
+
+        // Inquiries
+        async function loadInquiriesList() {
+            const container = document.getElementById("inquiriesListContainer");
+            if (!container) return;
+            const inquiries = await CollegeDB.adminGetInquiries();
+
+            if (!inquiries || inquiries.length === 0) {
+                container.innerHTML = `<p style="color:#94a3b8; font-size:0.85rem;">No active inquiries received yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = inquiries.map(m => {
+                return `
+                    <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 14px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+                        <div style="flex:1;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                <strong style="color:#ffffff; font-size:0.92rem;">${m.name}</strong>
+                                <span style="font-size:0.75rem; color:#64748b;">${m.created_at || 'Recent'}</span>
+                            </div>
+                            <div style="font-size:0.78rem; color:#38bdf8; margin-bottom:6px;">✉️ ${m.email} &bull; <strong>${m.subject || 'General'}</strong></div>
+                            <p style="margin:0; font-size:0.82rem; color:#cbd5e1; line-height:1.4;">${m.message}</p>
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            <a href="mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject || 'GL Bajaj Inquiry')}" class="btn-action-icon" title="Reply via Email">
+                                <i class='bx bx-reply'></i>
+                            </a>
+                            <button type="button" class="btn-action-icon btn-delete" title="Resolve / Delete" onclick="deleteInquiryMessage(${m.id})">
+                                <i class='bx bx-check'></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function deleteInquiryMessage(msgId) {
+            if (!confirm("Mark this inquiry as resolved and delete?")) return;
+            const res = await CollegeDB.adminDeleteInquiry(msgId);
+            alert(res.message || "Inquiry resolved.");
+            refreshAdminDashboard();
+        }
+    </script>
+</body>
+</html>
